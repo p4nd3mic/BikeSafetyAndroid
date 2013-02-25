@@ -1,0 +1,120 @@
+Rack # Building Name Address
+7  Penn Bookstore 3601 Walnut St
+8  University of Penn Museum 3260 Spruce
+9  University of Penn Museum 3260 Spruce
+10 Student Health Service Penn Tower
+11 Abramson Research 3501 Civic Center B
+12 Nurses Walk (Osler Circle) 3500 Osler St
+13 Bio Med Research 422 Curie Blvd
+14 Blockley Hall 418 Guardian Drive
+15 Nursing Education Building 420 Guardian Dr
+16 Rhoads Pavilion 450 Hollenback Dr
+17 Stemmler Hall 3450 Hamilton Walk
+18 Music Building 201 S 34th St
+19 Morgan Building 209 S 34th St
+20 Richards/Goddard 3710 Hamilton Walk
+21 Leidy Labs 3740 Hamilton Walk
+22 Wawa 3800 Spruce St
+23 40th & Spruce Intersection 4000 Spruce St
+24 Post Office Area 224-230 S.40th St
+25 Free Library 40th & Walnut St
+26 Public Safety 4040 Chestnut St
+27 Fresh Grocer 4001 Walnut St
+28 John Morgan Building 3620 Hamilton Walk
+29 College Buffet/ Campus Cop 3901 Walnut St
+30 International House 3701 Chestnut St
+31 Penn Newman Center 3720 Chestnut St
+32 Pottruck Gym 3701 Walnut St
+33 Inn @ Penn/Pod (emply entr 3600 Sansom St
+34 Sansom West (lower) 3650 Chestnut St
+35 Sansom West 3650 Chestnut St
+36 Sansom East 3600 Chestnut St
+37 ICA 118 S 36th St
+38 Eastern Mountain Sports 130 S 36th St
+39 Bookstore 3601 Walnut St
+40 Bookstore 3601 Walnut St
+41 Franklin Building 3451 Walnut St
+42 Kings Court/English House 3465 Sansom St
+43 Law School 3400 Chestnut St
+44 Under overpass 100 S. 31st St
+45 LRSM 3231 Walnut St
+46 1923 Ice Rink 3130 Walnut St
+47 DRL 209 S. 33rd St
+48 Hutchinson Gym 220 S. 32nd St
+49 Chemistry Building 3301 Spruce St
+50 Chemistry Building 3301 Spruce St
+51 Vagelos Research Labs 3340 Smith Walk
+52 Vagelos Research Labs 3340 Smith Walk
+53 Towne Building 220 S. 33rd St
+54 Morgan Building 209 S. 34th St
+55 Van Pelt Library 3420 Walnut St
+56 Van Pelt Library 3420 Walnut St
+57 Van Pelt Library 3420 Walnut St
+58 Meyerson Hall 210 S 34th St
+59 Fisher Fine Arts 220 S 34th St
+60 Duhring Wing 220 S 34th St
+61 Houston Hall 3417 Spruce St
+62 Houston Hall 3417 Spruce St
+63 Williams Hall 255 S 36th St
+64 Williams Hall 255 S 36th St
+65 Logan Hall 249 S 36th St
+66 Logan Hall 249 S 36th St
+67 Logan Hall 249 S 36th St
+68 The Arch 3601 Locust Walk
+69 Former Hillel Foundation 202 S 36th St
+70 Addams Fine Arts Hall 200 S 36th St
+71 Annenberg School 3620 Walnut St
+72 Annenberg School 3620 Walnut St
+73 Graduate Student Center 3615 Locust Walk
+74 Steinberg/Dietrich Hall 3620 Locust Walk
+75 Steinberg/Dietrich Hall 3620 Locust Walk
+76 Steinberg/Dietrich Hall 3620 Locust Walk
+77 Steinberg/Dietrich Hall 3620 Locust Walk
+78 Stitler Hall 208 S. 37th St
+79 Graduate School of Educati 3700 Walnut St
+80 Stitler Hall 208 S. 37th St
+81 Under overpass 100 S. 31st St
+82 Psychology Labs (Solomon) 3720 Walnut St
+83 Huntsman Hall 3730 Walnut St.
+84 Psychology Labs (Solomon) 3720 Walnut St
+85 Huntsman Hall 3730 Walnut St.
+86 McNeil Building 3718 Locust Walk
+87 Lauder Career Center 256 S 37th St
+88 Lauder Fischer Hall 256 S 37th St
+89 Vance Hall 3733 Spruce St
+90 Vance Hall 3733 Spruce St
+91 Steinberg Conference Cente 255 S. 38th St
+92 Mayer Hall 3817 Spruce St
+93 Schattner (Dental) 4001 Spruce St
+94 Steinhartdt Hall (Hillel) 215 S. 39th St
+95 DuBois House 3900 Walnut St
+96 Van Pelt Manor 3909 Spruce St
+97 Harrison House 3901 Spruce St
+98 Harrison House 3901 Spruce St
+99 Harnwell House 3820 Locust Walk
+100 Hamilton House 3901 Locust Walk
+101 Rotunda 4014 Walnut St
+102 Carriage House LGBT 3907 Spruce St
+103 Penn Press 3905 Spruce St
+104 Civic House 3914 Locust Walk
+105 College Hall 3450 Woodland Walk
+106 Franklin Field 200 S. 33rd St
+107 Hollenback Center 3000 South St
+108 Rhoads Field River Field Dr.
+109 Johnson Pavilion 3610 Hamilton Walk
+110 Hill Pavilion 380 University Ave
+111 Vet Hospital 3800 Spruce
+112 Gladys Hall Vet School 3800 Spruce
+113 Stuoffer College House 3702 Spruce St
+114 Carolyn Lynch Lab 433 University Ave
+115 Mudd Building 415 University Ave
+116 Domus Complex 3400 Chestnut St
+117 McNeil Center 3355 Woodland Walk
+118 Dunning Coach Building 231 S. 33rd St
+119 Weightman Hall 235 S. 33rd St
+120 Skirkanich Hall 210 S. 33rd St
+121 Haden Hall 240 S. 33rd St
+122 Bennett Hall 3340 Walnut St
+123 Caster Building 3701 Locust Walk
+124 College Hall 3450 Woodland Walk
+125 Hollenback Center 3000 South St
