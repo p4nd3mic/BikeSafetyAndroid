@@ -29,6 +29,7 @@ import android.os.Bundle;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -70,9 +71,11 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 				String[] coordinates = line.split(",");
 				double lat = Double.parseDouble(coordinates[0]);
 				double lon = Double.parseDouble(coordinates[1]);
-				if (withinBounds(currentLocation, lat, lon, 0.003))
-					mMap.addMarker(new MarkerOptions().position(
-							new LatLng(lat, lon)).title("Marker"));
+			//	if (withinBounds(currentLocation, lat, lon, 0.003))
+					mMap.addMarker(new MarkerOptions()
+					.position(new LatLng(lat, lon)).title(coordinates[2])
+                    .icon(BitmapDescriptorFactory.fromAsset("bicycle_shop.png"))
+                    		);
 			}
 		} catch (IOException e) {
 			System.out.println(e);
@@ -147,7 +150,7 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 		readLatLongFile(currentLocation);
 		
 		// Add a listener for marker click events
-		mMap.setOnMarkerClickListener(
+/*		mMap.setOnMarkerClickListener(
 			new GoogleMap.OnMarkerClickListener() {
 				@Override
 				public boolean onMarkerClick(Marker arg0) {
@@ -155,6 +158,16 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 					return false;
 				}
 			});
+		
+		*/
+		mMap.setOnInfoWindowClickListener(
+				new GoogleMap. OnInfoWindowClickListener() {
+					@Override
+					public void onInfoWindowClick(Marker arg0) {
+						showComments();
+					
+					}
+				});
 
 	}
 
@@ -168,7 +181,7 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 			LatLng userLocation = new LatLng(location.getLatitude(),
 					location.getLongitude());
 			CameraPosition camPos = CameraPosition.fromLatLngZoom(userLocation,
-					18);
+					15);
 			mMap.moveCamera(CameraUpdateFactory.newCameraPosition(camPos));
 		}
 		return location;

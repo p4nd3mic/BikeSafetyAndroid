@@ -25,7 +25,7 @@
     android:required="true"/>
   <!-- End of copy. -->
   <application
-    android:icon="@drawable/ic_launcher"
+    android:icon="@drawable/bikesafety_icon"
     android:label="@string/app_name"
     android:hardwareAccelerated="true">
 <!-- You must insert your own Google Maps for Android API v2 key in here. -->
