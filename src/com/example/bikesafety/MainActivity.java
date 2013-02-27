@@ -71,7 +71,7 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 				String[] coordinates = line.split(",");
 				double lat = Double.parseDouble(coordinates[0]);
 				double lon = Double.parseDouble(coordinates[1]);
-			//	if (withinBounds(currentLocation, lat, lon, 0.003))
+				if (withinBounds(currentLocation, lat, lon, 0.003))
 					mMap.addMarker(new MarkerOptions()
 					.position(new LatLng(lat, lon)).title(coordinates[2])
                     .icon(BitmapDescriptorFactory.fromAsset("bicycle_shop.png"))

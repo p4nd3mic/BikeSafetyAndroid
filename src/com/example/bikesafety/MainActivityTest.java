@@ -14,14 +14,12 @@
 
 	public class MainActivityTest extends android.test.InstrumentationTestCase {
 
-		private MainActivity ma;
 		public MainActivityTest() {
 			super();
 		}
 
 		protected void setUp() throws Exception {
 			super.setUp();
-			ma = new MainActivity();
 		}
 
 		protected void tearDown() throws Exception {
@@ -32,7 +30,6 @@
 		public void testLatLong() {		
 			BufferedReader in = null;
 			try {
-				ma = new MainActivity();
 				in = new BufferedReader(new InputStreamReader
 						(getInstrumentation().getTargetContext().getResources().getAssets().open("bike_locations.txt")));
 				String line;
