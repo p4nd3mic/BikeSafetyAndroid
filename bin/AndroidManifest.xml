@@ -3,6 +3,7 @@
   package="com.example.bikesafety"
   android:versionCode="1"
   android:versionName="1.0">
+  
   <permission
     android:name="com.example.bikesafety.permission.MAPS_RECEIVE"
     android:protectionLevel="signature"/>
@@ -25,9 +26,11 @@
     android:required="true"/>
   <!-- End of copy. -->
   <application
+      
     android:icon="@drawable/bikesafety_icon"
     android:label="@string/app_name"
     android:hardwareAccelerated="true">
+    <uses-library android:name="android.test.runner" />
 <!-- You must insert your own Google Maps for Android API v2 key in here. -->
     <meta-data
       android:name="com.google.android.maps.v2.API_KEY"
@@ -52,4 +55,6 @@
    
    
   </application>
+  <instrumentation android:name="android.test.InstrumentationTestRunner"
+       android:targetPackage="com.example.bikesafety" android:label="Tests for My App" />
 </manifest>
