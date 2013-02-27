@@ -76,6 +76,9 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 					.position(new LatLng(lat, lon)).title(coordinates[2])
                     .icon(BitmapDescriptorFactory.fromAsset("bicycle_shop.png"))
                     		);
+					
+					
+					
 			}
 		} catch (IOException e) {
 			System.out.println(e);
@@ -149,6 +152,7 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 		Location currentLocation = zoomAndCenterOnCurrentLocation();
 		readLatLongFile(currentLocation);
 		
+		setUpConstructionSites();
 		// Add a listener for marker click events
 /*		mMap.setOnMarkerClickListener(
 			new GoogleMap.OnMarkerClickListener() {
@@ -169,6 +173,13 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 					}
 				});
 
+	}
+
+	private void setUpConstructionSites() {
+		mMap.addMarker(new MarkerOptions()
+		.position(new LatLng(39.950905,-75.196033)).title("Construction")
+        .icon(BitmapDescriptorFactory.fromAsset("construction.png"))
+        		);		
 	}
 
 	private Location zoomAndCenterOnCurrentLocation() {
