@@ -4,7 +4,7 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
-	<classpathentry kind="lib" path="C:/Users/Frost Pumpkin/Dev/adt-bundle-windows-x86_64/sdk/extras/google/google_play_services/libproject/google-play-services_lib/libs/google-play-services.jar"/>
-	<classpathentry kind="lib" path="C:/Users/Frost Pumpkin/Dev/adt-bundle-windows-x86_64/sdk/extras/android/support/v4/android-support-v4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Daniel/AppData/Local/Android/android-sdk/extras/google/google_play_services/samples/maps/libs/google-play-services.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Daniel/AppData/Local/Android/android-sdk/extras/google/google_play_services/samples/maps/libs/android-support-v4.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

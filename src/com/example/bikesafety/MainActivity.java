@@ -20,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import android.content.Intent;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -30,6 +31,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
@@ -143,6 +145,16 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 
 		Location currentLocation = zoomAndCenterOnCurrentLocation();
 		readLatLongFile(currentLocation);
+		
+		// Add a listener for marker click events
+		mMap.setOnMarkerClickListener(
+			new GoogleMap.OnMarkerClickListener() {
+				@Override
+				public boolean onMarkerClick(Marker arg0) {
+					showComments();
+					return false;
+				}
+			});
 
 	}
 
@@ -160,5 +172,11 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 			mMap.moveCamera(CameraUpdateFactory.newCameraPosition(camPos));
 		}
 		return location;
+	}
+	
+	private void showComments() {
+		Intent intent = new Intent(this, CommentActivity.class);
+		//intent.putExtra("ID", marker_id);
+		startActivity(intent);
 	}
 }
