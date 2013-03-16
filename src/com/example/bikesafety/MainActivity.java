@@ -19,6 +19,7 @@ package com.example.bikesafety;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import android.content.Intent;
 import android.location.Criteria;
@@ -34,6 +35,13 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import com.parse.FindCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 /**
  * This shows how to create a simple activity with a map and a marker on the
@@ -52,46 +60,40 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Parse.initialize(this, "wllYXLfWfUbFoBpPBBGK2aLa9V5H0LaCkoKR3qfm",
+				"mraFSkEryhjIgD3Td2pMY062zxyhKKjEeeu8DsOX");
+
 		setContentView(R.layout.activity_main);
 		setUpMapIfNeeded();
 
 	}
 
 	private void readLatLongFile(Location currentLocation) {
-		BufferedReader in = null;
 
-		try {
-			in = new BufferedReader(new InputStreamReader(getAssets().open(
-					"bike_locations.txt")));
+		ParseQuery query = new ParseQuery("BikeRack");
+		query.findInBackground(new FindCallback() {
+			@Override
+			public void done(List<ParseObject> scoreList, ParseException e) {
+				if (e == null) {
+					for (ParseObject p : scoreList) {
+						ParseGeoPoint point = p.getParseGeoPoint("location");
+						double lat = point.getLatitude();
+						double lon = point.getLongitude();
+						mMap.addMarker(new MarkerOptions()
+								.position(new LatLng(lat, lon))
+								.title(p.getString("address"))
+								.icon(BitmapDescriptorFactory
+										.fromAsset("bicycle_shop.png")));
+					}
 
-			String line;
-
-			// add lines to an array of strings.
-			while ((line = in.readLine()) != null) {
-				String[] coordinates = line.split(",");
-				double lat = Double.parseDouble(coordinates[0]);
-				double lon = Double.parseDouble(coordinates[1]);
-				if (withinBounds(currentLocation, lat, lon, 0.003))
-					mMap.addMarker(new MarkerOptions()
-					.position(new LatLng(lat, lon)).title(coordinates[2])
-                    .icon(BitmapDescriptorFactory.fromAsset("bicycle_shop.png"))
-                    		);
-					
-					
-					
+				}
 			}
-		} catch (IOException e) {
-			System.out.println(e);
-		}
+
+		});
+
 	}
 
-	private boolean withinBounds(Location currentLocation, double lat,
-			double lon, double radius) {
-		boolean withinLat = lat >= (currentLocation.getLatitude() - radius) && lat <= (currentLocation.getLatitude() + radius);
-		boolean withinLong = lon >= (currentLocation.getLongitude() - radius) && lon <= (currentLocation.getLongitude() + radius);
-
-		return (withinLat  && withinLong); 
-	}
+	
 
 	@Override
 	protected void onResume() {
@@ -151,35 +153,31 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 
 		Location currentLocation = zoomAndCenterOnCurrentLocation();
 		readLatLongFile(currentLocation);
-		
+
 		setUpConstructionSites();
 		// Add a listener for marker click events
-/*		mMap.setOnMarkerClickListener(
-			new GoogleMap.OnMarkerClickListener() {
-				@Override
-				public boolean onMarkerClick(Marker arg0) {
-					showComments();
-					return false;
-				}
-			});
-		
-		*/
-		mMap.setOnInfoWindowClickListener(
-				new GoogleMap. OnInfoWindowClickListener() {
-					@Override
-					public void onInfoWindowClick(Marker arg0) {
-						showComments();
-					
-					}
-				});
+		/*
+		 * mMap.setOnMarkerClickListener( new GoogleMap.OnMarkerClickListener()
+		 * {
+		 * 
+		 * @Override public boolean onMarkerClick(Marker arg0) { showComments();
+		 * return false; } });
+		 */
+		mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+			@Override
+			public void onInfoWindowClick(Marker arg0) {
+				showComments();
+
+			}
+		});
 
 	}
 
 	private void setUpConstructionSites() {
 		mMap.addMarker(new MarkerOptions()
-		.position(new LatLng(39.950905,-75.196033)).title("Construction")
-        .icon(BitmapDescriptorFactory.fromAsset("construction.png"))
-        		);		
+				.position(new LatLng(39.950905, -75.196033))
+				.title("Construction")
+				.icon(BitmapDescriptorFactory.fromAsset("construction.png")));
 	}
 
 	private Location zoomAndCenterOnCurrentLocation() {
@@ -197,10 +195,10 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 		}
 		return location;
 	}
-	
+
 	private void showComments() {
 		Intent intent = new Intent(this, CommentActivity.class);
-		//intent.putExtra("ID", marker_id);
+		// intent.putExtra("ID", marker_id);
 		startActivity(intent);
 	}
 }
