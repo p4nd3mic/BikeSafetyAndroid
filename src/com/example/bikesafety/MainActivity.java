@@ -19,6 +19,7 @@ package com.example.bikesafety;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.List;
 
 import android.content.Intent;
@@ -56,13 +57,14 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 	 * available.
 	 */
 	private GoogleMap mMap;
+	private HashMap<Marker, String> markerIDs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Parse.initialize(this, "wllYXLfWfUbFoBpPBBGK2aLa9V5H0LaCkoKR3qfm",
 				"mraFSkEryhjIgD3Td2pMY062zxyhKKjEeeu8DsOX");
-
+		
 		setContentView(R.layout.activity_main);
 		setUpMapIfNeeded();
 
@@ -71,6 +73,8 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 	private void readLatLongFile(Location currentLocation) {
 
 		ParseQuery query = new ParseQuery("BikeRack");
+		
+		query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
 		query.findInBackground(new FindCallback() {
 			@Override
 			public void done(List<ParseObject> scoreList, ParseException e) {
@@ -79,11 +83,12 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 						ParseGeoPoint point = p.getParseGeoPoint("location");
 						double lat = point.getLatitude();
 						double lon = point.getLongitude();
-						mMap.addMarker(new MarkerOptions()
+						Marker m = mMap.addMarker(new MarkerOptions()
 								.position(new LatLng(lat, lon))
 								.title(p.getString("address"))
 								.icon(BitmapDescriptorFactory
 										.fromAsset("bicycle_shop.png")));
+						markerIDs.put(m, p.getObjectId());
 					}
 
 				}
@@ -151,6 +156,8 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 	 */
 	private void setUpMap() {
 
+		markerIDs = new HashMap<Marker, String>();
+		
 		Location currentLocation = zoomAndCenterOnCurrentLocation();
 		readLatLongFile(currentLocation);
 
@@ -165,8 +172,9 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 		 */
 		mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
 			@Override
-			public void onInfoWindowClick(Marker arg0) {
-				showComments();
+			public void onInfoWindowClick(Marker mark) {
+				
+				showComments(markerIDs.get(mark));
 
 			}
 		});
@@ -196,9 +204,9 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 		return location;
 	}
 
-	private void showComments() {
+	private void showComments(String marker_id) {
 		Intent intent = new Intent(this, CommentActivity.class);
-		// intent.putExtra("ID", marker_id);
+		intent.putExtra("com.example.bikesafety.ID", marker_id);
 		startActivity(intent);
 	}
 }
