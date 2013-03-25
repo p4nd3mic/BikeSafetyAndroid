@@ -23,6 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
@@ -36,6 +37,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PolylineOptions;
 
 import com.parse.FindCallback;
 import com.parse.Parse;
@@ -58,22 +60,32 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 	 */
 	private GoogleMap mMap;
 	private HashMap<Marker, String> markerIDs;
+	private static final LatLng thirtyEighthAndMarket = new LatLng(39.956685,
+			-75.198031);
+	private static final LatLng thirtyEighthAndSpruce = new LatLng(39.951409,
+			-75.199129);
+	private static final LatLng spruceAnd40th = new LatLng(39.951785,
+			-75.203085);
+	private static final LatLng spruceAnd42nd = new LatLng(39.952229,
+			-75.206561);
+	private static final LatLng pineAnd42nd = new LatLng(39.951211, -75.207159);
+	private static final LatLng marketAnd40th = new LatLng(39.957211,-75.20195);
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Parse.initialize(this, "wllYXLfWfUbFoBpPBBGK2aLa9V5H0LaCkoKR3qfm",
 				"mraFSkEryhjIgD3Td2pMY062zxyhKKjEeeu8DsOX");
-		
+
 		setContentView(R.layout.activity_main);
 		setUpMapIfNeeded();
 
 	}
 
-	private void readLatLongFile(Location currentLocation) {
+	private void fetchBikeRacks(Location currentLocation) {
 
 		ParseQuery query = new ParseQuery("BikeRack");
-		
 		query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
 		query.findInBackground(new FindCallback() {
 			@Override
@@ -90,15 +102,10 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 										.fromAsset("bicycle_shop.png")));
 						markerIDs.put(m, p.getObjectId());
 					}
-
 				}
 			}
-
 		});
-
 	}
-
-	
 
 	@Override
 	protected void onResume() {
@@ -157,27 +164,30 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 	private void setUpMap() {
 
 		markerIDs = new HashMap<Marker, String>();
-		
 		Location currentLocation = zoomAndCenterOnCurrentLocation();
-		readLatLongFile(currentLocation);
+		fetchBikeRacks(currentLocation);
+		addTrolleyTracks();
 
 		setUpConstructionSites();
-		// Add a listener for marker click events
-		/*
-		 * mMap.setOnMarkerClickListener( new GoogleMap.OnMarkerClickListener()
-		 * {
-		 * 
-		 * @Override public boolean onMarkerClick(Marker arg0) { showComments();
-		 * return false; } });
-		 */
 		mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
 			@Override
 			public void onInfoWindowClick(Marker mark) {
-				
+
 				showComments(markerIDs.get(mark));
 
 			}
 		});
+
+	}
+
+	private void addTrolleyTracks() {
+		mMap.addPolyline((new PolylineOptions())
+				.add(thirtyEighthAndMarket, thirtyEighthAndSpruce,
+						spruceAnd40th, spruceAnd42nd, pineAnd42nd).width(5)
+				.color(Color.RED));
+		mMap.addPolyline((new PolylineOptions())
+				.add(marketAnd40th, spruceAnd40th).width(5)
+				.color(Color.RED));
 
 	}
 
