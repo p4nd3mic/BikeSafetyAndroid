@@ -3,8 +3,9 @@
 
     <string name="app_name">BikeSafety</string>
     <string name="hello_world">Hello world!</string>
-    <string name="menu_settings">Settings</string>
+    <string name="menu_tips">Safety Tips</string>
     <string name="map">Bike Map</string>
+    <string name="menu_photo_creds">Icon Credits</string>
     
     
 

@@ -27,7 +27,14 @@ import android.graphics.Color;
 import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -82,6 +89,49 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 		setUpMapIfNeeded();
 
 	}
+	
+	//@Override	
+	//public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstance){
+	//	View view = inflater.inflate(R.layout.activity_main, container, false);
+	//	return view;
+	//}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		 MenuInflater inflater = getMenuInflater();
+		    inflater.inflate(R.menu.activity_main, menu);
+		    return true;
+	}
+	
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch(item.getItemId())
+        {
+            case R.id.menu_settings:
+            	Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.dot.state.pa.us/Internet/Bureaus/pdBikePed.nsf/infoAcknowledgements?OpenForm"));
+            	startActivity(browserIntent);
+                return true;
+            case R.id.menu_photo_creds:
+            	browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://mapicons.nicolasmollet.com/"));
+            	startActivity(browserIntent);
+                return true;
+
+            default:
+            return super.onOptionsItemSelected(item);
+        }
+    }
+	
+	@Override
+	protected void onResume() {
+		super.onResume();
+		setUpMapIfNeeded();
+	}
+
+	@Override
+	protected void onPause() {
+		super.onPause();
+	}
 
 	private void fetchBikeRacks(Location currentLocation) {
 
@@ -97,7 +147,7 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 						double lon = point.getLongitude();
 						Marker m = mMap.addMarker(new MarkerOptions()
 								.position(new LatLng(lat, lon))
-								.title(p.getString("address"))
+								.title(p.getString("address") + " >")
 								.icon(BitmapDescriptorFactory
 										.fromAsset("bicycle_shop.png")));
 						markerIDs.put(m, p.getObjectId());
@@ -107,16 +157,7 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 		});
 	}
 
-	@Override
-	protected void onResume() {
-		super.onResume();
-		setUpMapIfNeeded();
-	}
 
-	@Override
-	protected void onPause() {
-		super.onPause();
-	}
 
 	/**
 	 * Sets up the map if it is possible to do so (i.e., the Google Play

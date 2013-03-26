@@ -17,6 +17,7 @@ int drawable bikesafety_icon 0x7f020001
 int drawable ic_launcher 0x7f020002
 int id listview 0x7f040004
 int id map 0x7f040005
+int id menu_photo_creds 0x7f040007
 int id menu_settings 0x7f040006
 int id none 0x7f040000
 int id normal 0x7f040001
@@ -39,7 +40,8 @@ int string common_google_play_services_update_text 0x7f050008
 int string common_google_play_services_update_title 0x7f050007
 int string hello_world 0x7f05000c
 int string map 0x7f05000e
-int string menu_settings 0x7f05000d
+int string menu_photo_creds 0x7f05000f
+int string menu_tips 0x7f05000d
 int style AppBaseTheme 0x7f060000
 int style AppTheme 0x7f060001
 int[] styleable MapAttrs { 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007, 0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b, 0x7f01000c, 0x7f01000d }

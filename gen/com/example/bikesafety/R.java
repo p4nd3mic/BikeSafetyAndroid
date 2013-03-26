@@ -135,6 +135,7 @@ containing a value of this type.
     public static final class id {
         public static final int listview=0x7f040004;
         public static final int map=0x7f040005;
+        public static final int menu_photo_creds=0x7f040007;
         public static final int menu_settings=0x7f040006;
         public static final int none=0x7f040000;
         public static final int normal=0x7f040001;
@@ -195,7 +196,8 @@ containing a value of this type.
         public static final int common_google_play_services_update_title=0x7f050007;
         public static final int hello_world=0x7f05000c;
         public static final int map=0x7f05000e;
-        public static final int menu_settings=0x7f05000d;
+        public static final int menu_photo_creds=0x7f05000f;
+        public static final int menu_tips=0x7f05000d;
     }
     public static final class style {
         /** 

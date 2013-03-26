@@ -110,9 +110,9 @@ public class CommentActivity extends Activity {
 		submit.setGravity(0x11);
 		submit.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				String title = inputTitle.getText().toString();
-				String body = inputBody.getText().toString();
-				submitComment(title, body);
+					String title = inputTitle.getText().toString();
+					String body = inputBody.getText().toString();
+					submitComment(title, body);
 				}
 			});
 		
