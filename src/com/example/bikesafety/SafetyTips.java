@@ -17,16 +17,6 @@ public class SafetyTips extends Activity {
                         super.onCreate(savedInstanceState);
                         setContentView(R.layout.safety_tips);
 
-                        
-                        /*TextView t3 = (TextView) findViewById(R.id.text3);
-                        t3.setText(
-                            Html.fromHtml(
-                                "<b>text3:</b>  Text with a " +
-                                "<a href=\"http://blog.bicyclecoalition.org/2008/07/tips-for-locking-your-bicycle.html\">link</a> " +
-                                "created in the Java source code using HTML."));
-                        t3.setMovementMethod(LinkMovementMethod.getInstance());*/
-                        
-                        
                         tv = (TextView) findViewById(R.id.textView1);
                         tv.setText(
                                 Html.fromHtml(
