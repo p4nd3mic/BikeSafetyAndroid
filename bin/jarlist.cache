@@ -1,5 +1,7 @@
 # cache for current jar dependecy. DO NOT EDIT.
 # format is <lastModified> <length> <SHA-1> <path>
 # Encoding is UTF-8
-1364344926316 231342 41b51ef40a13bc22afdc742f4d00d852b6ac4029 C:\Users\Frost Pumpkin\Documents\GitHub\BikeSafety\libs\google-play-services.jar
-1360760346761 231342 41b51ef40a13bc22afdc742f4d00d852b6ac4029 C:\Users\Frost Pumpkin\Dev\adt-bundle-windows-x86_64\sdk\extras\google\google_play_services\libproject\google-play-services_lib\libs\google-play-services.jar
+1363105921000 231342 41b51ef40a13bc22afdc742f4d00d852b6ac4029 /Users/parksa/Documents/code/BikeSafety/libs/google-play-services.jar
+1360356864000 231342 41b51ef40a13bc22afdc742f4d00d852b6ac4029 /Applications/eclipse/android-sdk-macosx/extras/google/google_play_services/libproject/google-play-services_lib/libs/google-play-services.jar
+1360732946000 385685 48c94ae70fa65718b382098237806a5909bb096e /Applications/eclipse/android-sdk-macosx/extras/google/google_play_services/libproject/google-play-services_lib/libs/android-support-v4.jar
+1363105921000 385685 48c94ae70fa65718b382098237806a5909bb096e /Users/parksa/Documents/code/BikeSafety/libs/android-support-v4.jar

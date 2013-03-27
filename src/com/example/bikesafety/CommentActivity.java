@@ -37,6 +37,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 public class CommentActivity extends Activity {
@@ -47,6 +48,8 @@ public class CommentActivity extends Activity {
 	protected EditText inputBody;
 	protected TextView header;
 	protected ParseObject rack;
+    private ProgressBar mProgress;
+
 	
 	/*private class Comment {
 		private String body;
@@ -136,6 +139,9 @@ public class CommentActivity extends Activity {
 	}
 	
 	public void loadData() {
+        mProgress = (ProgressBar) findViewById(R.id.progress_bar);
+        mProgress.setVisibility(View.GONE);
+
 		// Load the address
 		header.setText(rack.getString("address"));
 		
@@ -176,6 +182,7 @@ public class CommentActivity extends Activity {
 			// TODO Display an error message
 			
 		} else {
+	        mProgress.setVisibility(View.VISIBLE);
 			// Write the new comment to the database
 			ParseObject p = new ParseObject("Comment");
 			p.put("title", title);
@@ -184,6 +191,7 @@ public class CommentActivity extends Activity {
 			p.saveEventually(new SaveCallback() {
 				public void done(ParseException e) { 
 					loadData();
+			        mProgress.setVisibility(View.GONE);
 				}
 			});
 			
