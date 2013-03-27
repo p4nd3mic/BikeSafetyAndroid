@@ -109,11 +109,13 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
         switch(item.getItemId())
         {
             case R.id.menu_settings:
-            	Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.dot.state.pa.us/Internet/Bureaus/pdBikePed.nsf/infoAcknowledgements?OpenForm"));
-            	startActivity(browserIntent);
+            	Intent safety = new Intent(this, SafetyTips.class);
+            	startActivity(safety);
+            	//Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://www.dot.state.pa.us/Internet/Bureaus/pdBikePed.nsf/infoAcknowledgements?OpenForm"));
+            	//startActivity(browserIntent);
                 return true;
             case R.id.menu_photo_creds:
-            	browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://mapicons.nicolasmollet.com/"));
+            	Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://mapicons.nicolasmollet.com/"));
             	startActivity(browserIntent);
                 return true;
 
