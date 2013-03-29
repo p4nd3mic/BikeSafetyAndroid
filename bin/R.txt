@@ -41,10 +41,12 @@ int string common_google_play_services_unknown_issue 0x7f050009
 int string common_google_play_services_update_button 0x7f05000a
 int string common_google_play_services_update_text 0x7f050008
 int string common_google_play_services_update_title 0x7f050007
+int string covered 0x7f050010
 int string hello_world 0x7f05000c
 int string map 0x7f05000e
 int string menu_photo_creds 0x7f05000f
 int string menu_tips 0x7f05000d
+int string uncovered 0x7f050011
 int style AppBaseTheme 0x7f060000
 int style AppTheme 0x7f060001
 int[] styleable MapAttrs { 0x7f010000, 0x7f010001, 0x7f010002, 0x7f010003, 0x7f010004, 0x7f010005, 0x7f010006, 0x7f010007, 0x7f010008, 0x7f010009, 0x7f01000a, 0x7f01000b, 0x7f01000c, 0x7f01000d }

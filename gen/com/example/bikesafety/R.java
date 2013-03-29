@@ -197,10 +197,12 @@ containing a value of this type.
         Google Play services (from Play Store) [CHAR LIMIT=40] 
          */
         public static final int common_google_play_services_update_title=0x7f050007;
+        public static final int covered=0x7f050010;
         public static final int hello_world=0x7f05000c;
         public static final int map=0x7f05000e;
         public static final int menu_photo_creds=0x7f05000f;
         public static final int menu_tips=0x7f05000d;
+        public static final int uncovered=0x7f050011;
     }
     public static final class style {
         /** 

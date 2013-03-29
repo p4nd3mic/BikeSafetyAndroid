@@ -141,18 +141,27 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 		query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
 		query.findInBackground(new FindCallback() {
 			@Override
-			public void done(List<ParseObject> scoreList, ParseException e) {
+			public void done(List<ParseObject> rackList, ParseException e) {
 				if (e == null) {
-					for (ParseObject p : scoreList) {
-						ParseGeoPoint point = p.getParseGeoPoint("location");
+					for (ParseObject rack : rackList) {
+						ParseGeoPoint point = rack.getParseGeoPoint("location");
 						double lat = point.getLatitude();
 						double lon = point.getLongitude();
-						Marker m = mMap.addMarker(new MarkerOptions()
-								.position(new LatLng(lat, lon))
-								.title(p.getString("address") + " >")
-								.icon(BitmapDescriptorFactory
-										.fromAsset("bicycle_shop.png")));
-						markerIDs.put(m, p.getObjectId());
+						Marker m;
+						if (rack.getBoolean("covered"))
+							m = mMap.addMarker(new MarkerOptions()
+							.position(new LatLng(lat, lon))
+							.title(rack.getString("address") + " >")
+							.icon(BitmapDescriptorFactory
+									.fromAsset("cycling_covered.png")));
+						else{
+							m = mMap.addMarker(new MarkerOptions()
+							.position(new LatLng(lat, lon))
+							.title(rack.getString("address") + " >")
+							.icon(BitmapDescriptorFactory
+									.fromAsset("cycling.png")));
+						}
+						markerIDs.put(m, rack.getObjectId());
 					}
 				}
 			}
@@ -238,7 +247,7 @@ public class MainActivity extends android.support.v4.app.FragmentActivity {
 		mMap.addMarker(new MarkerOptions()
 				.position(new LatLng(39.950905, -75.196033))
 				.title("Construction")
-				.icon(BitmapDescriptorFactory.fromAsset("construction.png")));
+				.icon(BitmapDescriptorFactory.fromAsset("caution.png")));
 	}
 
 	private Location zoomAndCenterOnCurrentLocation() {
