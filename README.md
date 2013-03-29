@@ -1,2 +1,2 @@
-![My image](aparks.github.com/BikeSafety/map.png)
-![My image](aparks.github.com/BikeSafety/comments.png)
+![My image](github.com/AParks/BikeSafety/blob/master/map.png)
+![My image](github.com/AParks/BikeSafety/blob/master/comments.png)
