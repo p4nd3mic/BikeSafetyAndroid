@@ -28,7 +28,7 @@
   <!-- End of copy. -->
   <application
       
-    android:icon="@drawable/bikesafety_icon"
+    android:icon="@drawable/bikewell"
     android:label="@string/app_name"
     android:hardwareAccelerated="true"
     android:debuggable="true">
@@ -37,14 +37,15 @@
     <meta-data
       android:name="com.google.android.maps.v2.API_KEY"
       android:value="AIzaSyBNOrTcjmioP0dCNZaP26IUoMhJOCUu1J4"/>
-           <activity
-            android:name="com.example.bikesafety.MapActivity"
-            android:label="@string/app_name" >
+      	<activity
+            android:name="com.example.bikesafety.SplashScreen"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.example.bikesafety.MapActivity" />
         <activity
             android:name="com.example.bikesafety.CommentActivity"
             android:label="@string/app_name"
