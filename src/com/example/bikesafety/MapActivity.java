@@ -178,13 +178,14 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		fetchBikeRacks();
 		addTrolleyTracks();
 		setUpConstructionSites();
-		mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+		mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 			@Override
-			public void onInfoWindowClick(Marker mark) {
-				showComments(markerIDs.get(mark));
+			public boolean onMarkerClick(Marker mark) {
+				getDirections(markerIDs.get(mark));
+				//showComments(markerIDs.get(mark));
+				return true;
 			}
 		});
-
 	}
 
 	private void addTrolleyTracks() {
@@ -224,5 +225,14 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		Intent intent = new Intent(this, CommentActivity.class);
 		intent.putExtra("com.example.bikesafety.ID", marker_id);
 		startActivity(intent);
+	}
+	
+	private void getDirections(String marker_id) {
+		Intent getDirections = new Intent(this, GetDirections.class);
+		getDirections.putExtra("com.example.bikesafety.ID", marker_id);
+		Location location = zoomAndCenterOnCurrentLocation();
+		getDirections.putExtra("com.example.bikesafety.location", location);
+		startActivity(getDirections);
+		
 	}
 }

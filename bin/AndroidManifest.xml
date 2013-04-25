@@ -54,7 +54,10 @@
             	android:name="android.support.PARENT_ACTIVITY"
             	android:value="com.example.bikesafety.MainActivity" />
         </activity>
-        <activity android:name=".SafetyTips" />
+        <activity android:name=".SafetyTips" />    
+        <activity android:name=".GetDirections" />
+        
+        
         
    
    <uses-library android:required="true" android:name="com.google.android.maps" />
