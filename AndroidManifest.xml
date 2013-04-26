@@ -70,12 +70,19 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MapActivity" />
         </activity>
+<<<<<<< HEAD
         <activity android:name=".SafetyTips" />
         <activity android:name=".GetDirections" />
 
         <uses-library
             android:name="com.google.android.maps"
             android:required="true" />
+=======
+        <activity android:name=".SafetyTips" />    
+        <activity android:name=".GetDirections" />
+        
+        
+>>>>>>> bbcc44acc6e23dc9a77767c823cd9c286021b206
         
     
     <provider android:name=".SuggestionProvider"

@@ -128,13 +128,17 @@ containing a value of this type.
         public static final int zOrderOnTop=0x7f01000d;
     }
     public static final class drawable {
-        public static final int bikewell=0x7f020000;
-        public static final int caution=0x7f020001;
-        public static final int cycling=0x7f020002;
-        public static final int cycling_covered=0x7f020003;
-        public static final int splash_screen=0x7f020004;
+        public static final int bike_icon=0x7f020000;
+        public static final int bikesafety_icon=0x7f020001;
+        public static final int bikewell=0x7f020002;
+        public static final int caution=0x7f020003;
+        public static final int cycling=0x7f020004;
+        public static final int cycling_covered=0x7f020005;
+        public static final int ic_launcher=0x7f020006;
+        public static final int splash_screen=0x7f020007;
     }
     public static final class id {
+<<<<<<< HEAD
         public static final int address=0x7f05000f;
         public static final int button1=0x7f05000c;
         public static final int button2=0x7f05000d;
@@ -155,20 +159,65 @@ containing a value of this type.
         public static final int text=0x7f050007;
         public static final int textView1=0x7f050010;
         public static final int tv=0x7f05000b;
+=======
+        public static final int button1=0x7f040011;
+        public static final int button2=0x7f040012;
+        public static final int child_body=0x7f040007;
+        public static final int child_date=0x7f040008;
+        public static final int comment_address=0x7f04000d;
+        public static final int comment_building=0x7f04000e;
+        public static final int comment_edit=0x7f04000a;
+        public static final int comment_footer=0x7f040009;
+        public static final int comment_header=0x7f04000c;
+        public static final int comment_submit=0x7f04000b;
+        public static final int info=0x7f04000f;
+        public static final int map=0x7f040006;
+        public static final int map_container=0x7f040005;
+        public static final int menu_photo_creds=0x7f040017;
+        public static final int menu_settings=0x7f040016;
+        public static final int none=0x7f040000;
+        public static final int normal=0x7f040001;
+        public static final int parent_body=0x7f040013;
+        public static final int parent_date=0x7f040014;
+        public static final int progress_bar=0x7f040004;
+        public static final int satellite=0x7f040002;
+        public static final int terrain=0x7f040003;
+        public static final int textView1=0x7f040015;
+        public static final int tv=0x7f040010;
+>>>>>>> bbcc44acc6e23dc9a77767c823cd9c286021b206
     }
     public static final class layout {
         public static final int activity_comment=0x7f030000;
         public static final int activity_main=0x7f030001;
+<<<<<<< HEAD
         public static final int get_directions=0x7f030002;
         public static final int result=0x7f030003;
         public static final int safety_tips=0x7f030004;
         public static final int splash_screen=0x7f030005;
+=======
+        public static final int child_row=0x7f030002;
+        public static final int comment_footer=0x7f030003;
+        public static final int comment_header=0x7f030004;
+        public static final int get_directions=0x7f030005;
+        public static final int parent_row=0x7f030006;
+        public static final int safety_tips=0x7f030007;
+        public static final int splash_screen=0x7f030008;
+>>>>>>> bbcc44acc6e23dc9a77767c823cd9c286021b206
     }
     public static final class menu {
         public static final int activity_main=0x7f080000;
     }
     public static final class string {
+<<<<<<< HEAD
         public static final int app_name=0x7f06000b;
+=======
+        public static final int app_name=0x7f05000b;
+        public static final int comment_cancel=0x7f050016;
+        public static final int comment_hint=0x7f050012;
+        public static final int comment_invalid=0x7f050014;
+        public static final int comment_reply_title=0x7f050015;
+        public static final int comment_submit=0x7f050013;
+>>>>>>> bbcc44acc6e23dc9a77767c823cd9c286021b206
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=30] 
