@@ -60,7 +60,8 @@ public class GetDirections extends Activity implements OnClickListener {
 
 
 		TextView text =  (TextView) findViewById(R.id.tv);
-        text.setText(address);
+		text.setText("3500 Osler St");
+        //text.setText(address);
         addListenerOnButton();
 
 	}
@@ -74,6 +75,8 @@ public class GetDirections extends Activity implements OnClickListener {
 				PorterDuff.Mode.MULTIPLY);
 		
 		button2 = (Button) findViewById(R.id.button2);
+		button2.getBackground().setColorFilter(0xFF6dc066,
+				PorterDuff.Mode.MULTIPLY);
 		
 		button1.setOnClickListener(this);
 		button2.setOnClickListener(this);
