@@ -1,64 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="com.example.bikesafety"
-  android:versionCode="1"
-  android:versionName="1.0">
-  
-  <permission
-    android:name="com.example.bikesafety.permission.MAPS_RECEIVE"
-    android:protectionLevel="signature"/>
-  <uses-permission android:name="com.example.bikesafety.permission.MAPS_RECEIVE"/>
-  <!-- Copied from Google Maps Library/AndroidManifest.xml. -->
-  <uses-sdk
-    android:minSdkVersion="8"
-    android:targetSdkVersion="17"/>
-  <uses-permission android:name="android.permission.INTERNET"/>
-  <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES"/>
-  <!-- External storage for caching. -->
-  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-  <!-- My Location -->
-  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-  <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-  <!-- Maps API needs OpenGL ES 2.0. -->
-  <uses-feature
-    android:glEsVersion="0x00020000"
-    android:required="true"/>
-  <!-- End of copy. -->
-  <application
-      
-    android:icon="@drawable/bikewell"
-    android:label="@string/app_name"
-    android:hardwareAccelerated="true"
-    android:debuggable="true">
-    <uses-library android:name="android.test.runner" />
-<!-- You must insert your own Google Maps for Android API v2 key in here. -->
-    <meta-data
-      android:name="com.google.android.maps.v2.API_KEY"
-      android:value="AIzaSyBNOrTcjmioP0dCNZaP26IUoMhJOCUu1J4"/>
-      	<activity
+    package="com.example.bikesafety"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <permission
+        android:name="com.example.bikesafety.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+    <uses-permission android:name="com.example.bikesafety.permission.MAPS_RECEIVE" />
+    <!-- Copied from Google Maps Library/AndroidManifest.xml. -->
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+    <!-- External storage for caching. -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- My Location -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <!-- Maps API needs OpenGL ES 2.0. -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
+    <!-- End of copy. -->
+    <application
+        android:debuggable="true"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/bikewell"
+        android:label="@string/app_name" >
+        <uses-library android:name="android.test.runner" />
+        <!-- You must insert your own Google Maps for Android API v2 key in here. -->
+        <meta-data
+            android:name="com.google.android.maps.v2.API_KEY"
+            android:value="AIzaSyBNOrTcjmioP0dCNZaP26IUoMhJOCUu1J4" />
+
+        <activity
             android:name="com.example.bikesafety.SplashScreen"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.example.bikesafety.MapActivity" />
+        <activity
+            android:name=".MapActivity"
+            android:launchMode="singleTop" >
+
+            <!-- Receives the search request. -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+                <!-- No category needed, because the Intent will specify this class component -->
+            </intent-filter>
+
+            <!-- Points to searchable meta data. -->
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
         <activity
             android:name="com.example.bikesafety.CommentActivity"
             android:label="@string/app_name"
-            android:parentActivityName="com.example.bikesafety.MapActivity" >
+            android:parentActivityName=".MapActivity" >
             <meta-data
-            	android:name="android.support.PARENT_ACTIVITY"
-            	android:value="com.example.bikesafety.MainActivity" />
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MapActivity" />
         </activity>
         <activity android:name=".SafetyTips" />
+        <activity android:name=".GetDirections" />
+
+        <uses-library
+            android:name="com.google.android.maps"
+            android:required="true" />
         
-   
-   <uses-library android:required="true" android:name="com.google.android.maps" />
-  </application>
-  <instrumentation android:name="android.test.InstrumentationTestRunner"
-       android:targetPackage="com.example.bikesafety" android:label="Tests for My App" />
+    
+    <provider android:name=".SuggestionProvider"
+              android:authorities="com.example.bikesafety.SuggestionProvider" />
+    
+    <meta-data
+        android:name="android.app.default_searchable"
+        android:value=".MapActivity" />
+    </application>
+    
+
+
+    <instrumentation
+        android:name="android.test.InstrumentationTestRunner"
+        android:label="Tests for My App"
+        android:targetPackage="com.example.bikesafety" />
+
 </manifest>

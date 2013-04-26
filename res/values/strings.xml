@@ -2,14 +2,15 @@
 <resources>
 
     <string name="app_name">Bike Parking Map</string>
+    <string name="search_label">Bike Parking Map</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_tips">Safety Tips</string>
     <string name="map">Bike Map</string>
     <string name="menu_photo_creds">Icon Credits</string>
     <string name="covered">Covered Bike Rack</string>
     <string name="uncovered">Uncovered Bike Rack</string>
-    
-    
-    
+    <string name="menu_search">Search for a bike rack</string>
+    <string name="search_hint">Search for a bike rack</string>
+    <string name="settings_description">Definitions of words</string>
 
 </resources>

@@ -16,22 +16,47 @@ package com.example.bikesafety;
  * limitations under the License.
  */
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
+import android.location.Address;
 import android.location.Criteria;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.SearchRecentSuggestions;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.SearchView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -54,7 +79,7 @@ import com.parse.ParseQuery;
 public class MapActivity extends android.support.v4.app.FragmentActivity {
 
 	private GoogleMap mMap;
-	private HashMap<Marker, String> markerIDs;
+	private HashMap<Marker, String> mMarkerIDs;
 	private static final LatLng thirtyEighthAndMarket = new LatLng(39.956685,
 			-75.198031);
 	private static final LatLng thirtyEighthAndSpruce = new LatLng(39.951409,
@@ -65,22 +90,159 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 			-75.206561);
 	private static final LatLng pineAnd42nd = new LatLng(39.951211, -75.207159);
 	private static final LatLng marketAnd40th = new LatLng(39.957211, -75.20195);
+	private final String FILENAME_CONSTRUCTION = "caution.png";
+	private final String FILENAME_UNCOVERED = "cycling.png";
+	private final String FILENAME_COVERED = "cycling_covered.png";
+	private final String applicationId = "wllYXLfWfUbFoBpPBBGK2aLa9V5H0LaCkoKR3qfm";
+	private final String clientKey = "mraFSkEryhjIgD3Td2pMY062zxyhKKjEeeu8DsOX";
+	private Geocoder mGeoCoder;
+	private FragmentManager mFragmentManager;
+	private Bundle mFragments;
+	private Object mViewPager;
+	private TextView mTextView;
+	private ListView mListView;
+	private MapView mView;
+	private LinearLayout layout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Parse.initialize(this, "wllYXLfWfUbFoBpPBBGK2aLa9V5H0LaCkoKR3qfm",
-				"mraFSkEryhjIgD3Td2pMY062zxyhKKjEeeu8DsOX");
-
 		setContentView(R.layout.activity_main);
+
+		Parse.initialize(this, applicationId, clientKey);
+		mTextView = (TextView) findViewById(R.id.text);
+		mListView = (ListView) findViewById(R.id.list);
+		mGeoCoder = new Geocoder(this);
+
 		setUpMapIfNeeded();
+		handleIntent(getIntent());
 
 	}
 
 	@Override
+	public void onNewIntent(Intent intent) {
+		super.onNewIntent(intent);
+		setIntent(intent);
+		handleIntent(intent);
+	}
+
+	private void handleIntent(Intent intent) {
+
+		if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+			// handles a click on a search suggestion; launches activity to show
+			// word
+			intent.getData();
+		} else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			System.out.println("action search");
+			String query = intent.getStringExtra(SearchManager.QUERY);
+	        SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
+	                SuggestionProvider.AUTHORITY, SuggestionProvider.MODE);
+	        suggestions.saveRecentQuery(query, null);
+			showResults(query);
+			// handles a search query
+			// Intent searchIntent = new Intent(this, SearchActivity.class);
+			// searchIntent.setData(intent.getData());
+			// startActivity(searchIntent);
+
+		}
+	}
+
+	private void replace() {
+
+		// Replace the fragment using a transaction.
+		FragmentTransaction transaction = mFragmentManager.beginTransaction();
+		transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+
+		// transaction.replace(R.id.map_container, search);
+		transaction.addToBackStack(null);
+		transaction.commit();
+	}
+
+	/*
+	 * public void swapFragments() { FragmentManager fm =
+	 * getSupportFragmentManager(); FragmentTransaction transaction =
+	 * fm.beginTransaction(); if (listFragment.isVisible()) {
+	 * transaction.hide(listFragment); if (mapFragment.isAdded()) {
+	 * transaction.show(mapFragment); } else { transaction.add(R.id.root,
+	 * mapFragment); } } else { transaction.hide(mapFragment);
+	 * transaction.show(listFragment); } transaction.commit(); }
+	 */
+
+	/**
+	 * Searches the dictionary and displays results for the given query.
+	 * 
+	 * @param query
+	 *            The search query
+	 */
+	@SuppressLint("NewApi")
+	private void showResults(String query) {
+		try {
+			
+			double lowerLeftLatitude = 39.9;
+			double lowerLeftLongitude = -75.26;
+			double upperRightLongitud = 40;
+			double upperRightLatitude = -75.1;
+			ArrayList<Address> locationResults = (ArrayList<Address>) mGeoCoder
+					.getFromLocationName(query, 15,  lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitud);
+			
+
+			
+			if (locationResults.isEmpty())
+				System.out.println("empty");
+			
+			else{
+				for (Address addr : locationResults)
+					if (addr.getAddressLine(1).equals("Philadelphia, PA")){
+						System.out.println(addr.getAddressLine(1));
+						zoomAndCenterOnLocation(addr.getLatitude(), addr.getLongitude());
+						break;
+					}
+										
+			}
+			//this.getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder)
+
+			String[] fromColumns = new String[] {
+					SearchManager.SUGGEST_COLUMN_TEXT_1,
+					SearchManager.SUGGEST_COLUMN_TEXT_2 };
+			int[] toViews = new int[] { R.id.search_entry, R.id.address };
+			SimpleCursorAdapter mAdapter = new SimpleCursorAdapter(this, R.layout.result, null,
+					fromColumns, toViews, 0);
+			mListView.setAdapter(mAdapter);
+			mTextView.setText(query);
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		// Define the on-click listener for the list items
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// Build the Intent used to open WordActivity with a specific
+				// word Uri
+
+			}
+		});
+
+		// Address addr = locationResults.get(0);
+		// zoomAndCenterOnLocation(addr.getLatitude(), addr.getLongitude());
+
+	}
+
+	@SuppressLint("NewApi")
+	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_main, menu);
+
+		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+		SearchView searchView = (SearchView) menu.findItem(R.id.menu_search)
+				.getActionView();
+		searchView.setSearchableInfo(searchManager
+				.getSearchableInfo(getComponentName()));
+		searchView.setIconifiedByDefault(false);
 		return true;
 	}
 
@@ -96,21 +258,16 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 					Uri.parse("http://mapicons.nicolasmollet.com/"));
 			startActivity(browserIntent);
 			return true;
+		case R.id.menu_search:
+			onSearchRequested();
+			// replace();
+			// Intent search = new Intent(this, SearchActivity.class);
+			// startActivity(search);
 
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	@Override
-	protected void onResume() {
-		super.onResume();
-		setUpMapIfNeeded();
-	}
-
-	@Override
-	protected void onPause() {
-		super.onPause();
 	}
 
 	private void fetchBikeRacks() {
@@ -124,20 +281,32 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 					for (ParseObject rack : rackList) {
 						String icon;
 						if (rack.getBoolean("covered"))
-							icon = "cycling_covered.png";
+							icon = FILENAME_COVERED;
 						else
-							icon = "cycling.png";
+							icon = FILENAME_UNCOVERED;
 						ParseGeoPoint point = rack.getParseGeoPoint("location");
 						double lat = point.getLatitude();
-						double lon = point.getLongitude();
-						LatLng position = new LatLng(lat, lon);
+						double lng = point.getLongitude();
+						LatLng position = new LatLng(lat, lng);
 						String title = rack.getString("address");
-						Marker m = addMarker(icon, position, title);
-						markerIDs.put(m, rack.getObjectId());
+						Marker marker = addMarker(icon, position, title);
+						mMarkerIDs.put(marker, rack.getObjectId());
 					}
 				}
 			}
 		});
+	}
+
+	private void getDirections(String marker_id) {
+		Intent getDirections = new Intent(this, GetDirections.class);
+		getDirections.putExtra("com.example.bikesafety.ID", marker_id);
+		Location location = getCurrentLocation();
+		if (location != null)
+			zoomAndCenterOnLocation(location.getLatitude(),
+					location.getLongitude());
+		getDirections.putExtra("com.example.bikesafety.location", location);
+		startActivity(getDirections);
+
 	}
 
 	// helper method for fetchBikeRacks
@@ -172,16 +341,20 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 	 * is not null.
 	 */
 	private void setUpMap() {
+		mMarkerIDs = new HashMap<Marker, String>();
 
-		markerIDs = new HashMap<Marker, String>();
-		zoomAndCenterOnCurrentLocation();
+		Location location = getCurrentLocation();
+		if (location != null)
+			zoomAndCenterOnLocation(location.getLatitude(),
+					location.getLongitude());
 		fetchBikeRacks();
 		addTrolleyTracks();
 		setUpConstructionSites();
-		mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+		mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 			@Override
-			public void onInfoWindowClick(Marker mark) {
-				showComments(markerIDs.get(mark));
+			public boolean onMarkerClick(Marker mark) {
+				getDirections(mMarkerIDs.get(mark));
+				return true;
 			}
 		});
 
@@ -200,23 +373,22 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 	private void setUpConstructionSites() {
 		mMap.addMarker(new MarkerOptions()
 				.position(new LatLng(39.950905, -75.196033))
-				.title("Construction")
-				.icon(BitmapDescriptorFactory.fromAsset("caution.png")));
+				.title("west-bound bike lane closed between 36th and 37th")
+				.icon(BitmapDescriptorFactory.fromAsset(FILENAME_CONSTRUCTION)));
 	}
 
-	private Location zoomAndCenterOnCurrentLocation() {
+	private void zoomAndCenterOnLocation(double lat, double lng) {
 		mMap.setMyLocationEnabled(true);
+		LatLng userLocation = new LatLng(lat, lng);
+		CameraPosition camPos = CameraPosition.fromLatLngZoom(userLocation, 15);
+		mMap.moveCamera(CameraUpdateFactory.newCameraPosition(camPos));
+	}
+
+	private Location getCurrentLocation() {
 		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
 		Criteria criteria = new Criteria();
 		String provider = service.getBestProvider(criteria, false);
 		Location location = service.getLastKnownLocation(provider);
-		if (location != null) {
-			LatLng userLocation = new LatLng(location.getLatitude(),
-					location.getLongitude());
-			CameraPosition camPos = CameraPosition.fromLatLngZoom(userLocation,
-					15);
-			mMap.moveCamera(CameraUpdateFactory.newCameraPosition(camPos));
-		}
 		return location;
 	}
 
