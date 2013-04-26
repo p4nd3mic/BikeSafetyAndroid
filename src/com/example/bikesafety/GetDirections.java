@@ -14,7 +14,10 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 
@@ -27,42 +30,44 @@ public class GetDirections extends Activity implements OnClickListener {
 	double to_lat;
 	double to_lon;
 	Location location;
+	String address = "";
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
 		setContentView(R.layout.get_directions);
+
 
 		Parse.initialize(this, "wllYXLfWfUbFoBpPBBGK2aLa9V5H0LaCkoKR3qfm",
 				"mraFSkEryhjIgD3Td2pMY062zxyhKKjEeeu8DsOX");
 		
 		marker_id = getIntent().getStringExtra("com.example.bikesafety.ID");
 		location = getIntent().getParcelableExtra("com.example.bikesafety.location");
-		System.out.println(location.getLatitude());
-		System.out.println(location.getLongitude());
-		System.out.println(marker_id);
 		ParseQuery query = new ParseQuery("BikeRack");
 		query.setCachePolicy(ParseQuery.CachePolicy.NETWORK_ELSE_CACHE);
 		query.getInBackground(marker_id, new GetCallback() {
-			
 			public void done(ParseObject p, ParseException e) {
 				if (e == null) {
 					rack = p;
-					System.out.println(rack);
 		        	ParseGeoPoint point = rack.getParseGeoPoint("location");
 					to_lat = point.getLatitude();
 					to_lon = point.getLongitude();
-					//System.out.println(lat);
-					//System.out.println(lon);
+					address = rack.getString("address");
+					System.out.println(address);
 					} else {
 					}
 				}
 			});
-		addListenerOnButton();
+
+
+		TextView text =  (TextView) findViewById(R.id.tv);
+        text.setText(address);
+        addListenerOnButton();
 
 	}
 
+
 	public void addListenerOnButton() {
+
 
 		button1 = (Button) findViewById(R.id.button1);
 		button1.getBackground().setColorFilter(0xFF00bfff,
