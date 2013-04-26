@@ -4,10 +4,10 @@
     android:layout_height="match_parent"
     tools:context=".CommentActivity" >
 
-    <ListView
-        android:id="@+id/listview"
+    <ExpandableListView
+        android:id="@id/android:list"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent" />
+        android:layout_height="match_parent" />
   
  <ProgressBar
          android:id="@+id/progress_bar"
