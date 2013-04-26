@@ -60,8 +60,7 @@ public class GetDirections extends Activity implements OnClickListener {
 
 
 		TextView text =  (TextView) findViewById(R.id.tv);
-		text.setText("3500 Osler St");
-        //text.setText(address);
+        text.setText(address);
         addListenerOnButton();
 
 	}
