@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.example.bikesafety.R;
-import com.example.bikesafety.R.id;
-
 import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;

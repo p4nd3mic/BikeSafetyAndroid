@@ -9,11 +9,9 @@
     <string name="menu_photo_creds">Icon Credits</string>
     <string name="covered">Covered Bike Rack</string>
     <string name="uncovered">Uncovered Bike Rack</string>
-<<<<<<< HEAD
     <string name="menu_search">Search for a bike rack</string>
     <string name="search_hint">Search for a bike rack</string>
     <string name="settings_description">Definitions of words</string>
-=======
     <string name="comment_hint">Leave a comment</string>
     <string name="comment_submit">Submit</string>
     <string name="comment_invalid">You must enter a comment!</string>
@@ -22,6 +20,5 @@
     
     
     
->>>>>>> bbcc44acc6e23dc9a77767c823cd9c286021b206
 
 </resources>
