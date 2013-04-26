@@ -194,8 +194,8 @@ public class CommentActivity extends ExpandableListActivity {
 	
 	private void setupListView() {
 		// Load the address & building name
-        TextView addressText = (TextView) findViewById(id.comment_address);
-        TextView buildingText = (TextView) findViewById(id.comment_building);
+        TextView addressText = (TextView) findViewById(R.id.comment_address);
+        TextView buildingText = (TextView) findViewById(R.id.comment_building);
 		addressText.setText(rack.getString("address"));
 		buildingText.setText(rack.getString("buildingName"));
 		
@@ -242,7 +242,7 @@ public class CommentActivity extends ExpandableListActivity {
 	// Write a comment to database
 	public void submitComment(View view) {
 		// Get the comment input box
-		EditText inputBody = (EditText) findViewById(id.comment_edit);
+		EditText inputBody = (EditText) findViewById(R.id.comment_edit);
 		String body = inputBody.getText().toString();
 		
 		// Check for invalid input
