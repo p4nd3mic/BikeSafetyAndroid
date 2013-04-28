@@ -6,9 +6,9 @@ import android.os.Bundle;
 import android.os.Handler;
  
 /**
- * Splash screen activity
+ * The screen that pops up when the app is first launched
+ * shows the SHS logo 
  *
- * @author Catalin Prata
  */
 public class SplashScreen extends Activity {
  

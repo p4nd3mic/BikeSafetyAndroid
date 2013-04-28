@@ -22,11 +22,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Criteria;
@@ -36,27 +34,13 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-import android.widget.AdapterView.OnItemClickListener;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -73,8 +57,10 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
 /*
+ * The main screen of the app
  * displays a map of bike parking spots, construction sites, 
  * and trolley tracks near Penn Campus
+ * also has an option to search for locations, and view safety tips
  */
 public class MapActivity extends android.support.v4.app.FragmentActivity {
 
@@ -96,13 +82,6 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 	private final String applicationId = "wllYXLfWfUbFoBpPBBGK2aLa9V5H0LaCkoKR3qfm";
 	private final String clientKey = "mraFSkEryhjIgD3Td2pMY062zxyhKKjEeeu8DsOX";
 	private Geocoder mGeoCoder;
-	private FragmentManager mFragmentManager;
-	private Bundle mFragments;
-	private Object mViewPager;
-	private TextView mTextView;
-	private ListView mListView;
-	private MapView mView;
-	private LinearLayout layout;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -110,8 +89,6 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		setContentView(R.layout.activity_main);
 
 		Parse.initialize(this, applicationId, clientKey);
-		mTextView = (TextView) findViewById(R.id.text);
-		mListView = (ListView) findViewById(R.id.list);
 		mGeoCoder = new Geocoder(this);
 
 		setUpMapIfNeeded();
@@ -135,102 +112,56 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		} else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
 			System.out.println("action search");
 			String query = intent.getStringExtra(SearchManager.QUERY);
-	        SearchRecentSuggestions suggestions = new SearchRecentSuggestions(this,
-	                SuggestionProvider.AUTHORITY, SuggestionProvider.MODE);
-	        suggestions.saveRecentQuery(query, null);
-			showResults(query);
-			// handles a search query
-			// Intent searchIntent = new Intent(this, SearchActivity.class);
-			// searchIntent.setData(intent.getData());
-			// startActivity(searchIntent);
+			SearchRecentSuggestions suggestions = new SearchRecentSuggestions(
+					this, SuggestionProvider.AUTHORITY, SuggestionProvider.MODE);
+			suggestions.saveRecentQuery(query, null);
+			getSearchResults(query);
 
 		}
 	}
 
-	private void replace() {
 
-		// Replace the fragment using a transaction.
-		FragmentTransaction transaction = mFragmentManager.beginTransaction();
-		transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
-
-		// transaction.replace(R.id.map_container, search);
-		transaction.addToBackStack(null);
-		transaction.commit();
-	}
-
-	/*
-	 * public void swapFragments() { FragmentManager fm =
-	 * getSupportFragmentManager(); FragmentTransaction transaction =
-	 * fm.beginTransaction(); if (listFragment.isVisible()) {
-	 * transaction.hide(listFragment); if (mapFragment.isAdded()) {
-	 * transaction.show(mapFragment); } else { transaction.add(R.id.root,
-	 * mapFragment); } } else { transaction.hide(mapFragment);
-	 * transaction.show(listFragment); } transaction.commit(); }
-	 */
 
 	/**
-	 * Searches the dictionary and displays results for the given query.
-	 * 
-	 * @param query
-	 *            The search query
+	 * Find 15 search results from the string location
+	 * zoom and centers on location, if it is in Phildelphia
+	 * does nothing, otherwise
 	 */
 	@SuppressLint("NewApi")
-	private void showResults(String query) {
+	private void getSearchResults(String query) {
 		try {
-			
+
 			double lowerLeftLatitude = 39.9;
 			double lowerLeftLongitude = -75.26;
 			double upperRightLongitud = 40;
 			double upperRightLatitude = -75.1;
 			ArrayList<Address> locationResults = (ArrayList<Address>) mGeoCoder
-					.getFromLocationName(query, 15,  lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitud);
-			
+					.getFromLocationName(query, 15, lowerLeftLatitude,
+							lowerLeftLongitude, upperRightLatitude,
+							upperRightLongitud);
 
-			
 			if (locationResults.isEmpty())
 				System.out.println("empty");
-			
-			else{
+
+			else {
 				for (Address addr : locationResults)
-					if (addr.getAddressLine(1).equals("Philadelphia, PA")){
+					if (addr.getAddressLine(1).equals("Philadelphia, PA")) {
 						System.out.println(addr.getAddressLine(1));
-						zoomAndCenterOnLocation(addr.getLatitude(), addr.getLongitude());
+						zoomAndCenterOnLocation(addr.getLatitude(),
+								addr.getLongitude());
 						break;
 					}
-										
 			}
-			//this.getContentResolver().query(uri, projection, selection, selectionArgs, sortOrder)
-
-			String[] fromColumns = new String[] {
-					SearchManager.SUGGEST_COLUMN_TEXT_1,
-					SearchManager.SUGGEST_COLUMN_TEXT_2 };
-			int[] toViews = new int[] { R.id.search_entry, R.id.address };
-			SimpleCursorAdapter mAdapter = new SimpleCursorAdapter(this, R.layout.result, null,
-					fromColumns, toViews, 0);
-			mListView.setAdapter(mAdapter);
-			mTextView.setText(query);
 
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		// Define the on-click listener for the list items
-		mListView.setOnItemClickListener(new OnItemClickListener() {
-
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// Build the Intent used to open WordActivity with a specific
-				// word Uri
-
-			}
-		});
-
-		// Address addr = locationResults.get(0);
-		// zoomAndCenterOnLocation(addr.getLatitude(), addr.getLongitude());
 
 	}
-
+	
+	
+	
+/* set up search configurations for the activity */
 	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -260,9 +191,6 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 			return true;
 		case R.id.menu_search:
 			onSearchRequested();
-			// replace();
-			// Intent search = new Intent(this, SearchActivity.class);
-			// startActivity(search);
 
 			return true;
 		default:
@@ -270,6 +198,7 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		}
 	}
 
+	//first checks cache, then queries parse for all the bike racks
 	private void fetchBikeRacks() {
 
 		ParseQuery query = new ParseQuery("BikeRack");
@@ -297,19 +226,7 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		});
 	}
 
-	private void getDirections(String marker_id) {
-		Intent getDirections = new Intent(this, GetDirections.class);
-		getDirections.putExtra("com.example.bikesafety.ID", marker_id);
-		Location location = getCurrentLocation();
-		if (location != null)
-			zoomAndCenterOnLocation(location.getLatitude(),
-					location.getLongitude());
-		getDirections.putExtra("com.example.bikesafety.location", location);
-		startActivity(getDirections);
-
-	}
-
-	// helper method for fetchBikeRacks
+	// add a map marker to a bike rack at some position
 	private Marker addMarker(String filename, LatLng position, String title) {
 		MarkerOptions options = new MarkerOptions();
 		options.icon(BitmapDescriptorFactory.fromAsset(filename));
@@ -353,8 +270,7 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 			@Override
 			public boolean onMarkerClick(Marker mark) {
-				getDirections(mMarkerIDs.get(mark));
-				//showComments(markerIDs.get(mark));
+				showComments(mMarkerIDs.get(mark));
 				return true;
 			}
 		});

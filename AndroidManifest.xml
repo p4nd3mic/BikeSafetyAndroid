@@ -44,11 +44,12 @@
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".MapActivity"
+            android:name="com.example.bikesafety.MapActivity"
             android:launchMode="singleTop" >
 
             <!-- Receives the search request. -->
@@ -71,24 +72,20 @@
                 android:value=".MapActivity" />
         </activity>
         <activity android:name=".SafetyTips" />
-        <activity android:name=".GetDirections" />
+ 		
+
+        <provider
+            android:name=".SuggestionProvider"
+            android:authorities="com.example.bikesafety.SuggestionProvider" />
+
+        <meta-data
+            android:name="android.app.default_searchable"
+            android:value=".MapActivity" />
 
         <uses-library
             android:name="com.google.android.maps"
             android:required="true" />
-        
-        
-        
-    
-    <provider android:name=".SuggestionProvider"
-              android:authorities="com.example.bikesafety.SuggestionProvider" />
-    
-    <meta-data
-        android:name="android.app.default_searchable"
-        android:value=".MapActivity" />
     </application>
-    
-
 
     <instrumentation
         android:name="android.test.InstrumentationTestRunner"

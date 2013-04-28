@@ -12,11 +12,20 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.SaveCallback;
 
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.app.ExpandableListActivity;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -25,6 +34,7 @@ import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ProgressBar;
+import android.widget.SearchView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
 
@@ -36,8 +46,57 @@ public class CommentActivity extends ExpandableListActivity {
 	protected ParseObject rack;
 	protected ParseObject currentComment;
 	protected HashMap<String, ParseObject> mapOfComments;
+	private final String applicationId = "wllYXLfWfUbFoBpPBBGK2aLa9V5H0LaCkoKR3qfm";
+	private final String clientKey = "mraFSkEryhjIgD3Td2pMY062zxyhKKjEeeu8DsOX";
     
 	private ProgressBar mProgress;
+	
+	
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.activity_comment, menu);
+
+		return true;
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.menu_settings:
+			Intent safety = new Intent(this, SafetyTips.class);
+			startActivity(safety);
+			return true;
+		case R.id.menu_directions:
+			directions();
+
+		
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	
+	private void directions() {
+		double to_lat = rack.getParseGeoPoint("location").getLatitude();
+		double to_lng = rack.getParseGeoPoint("location").getLongitude();
+		Location location = getCurrentLocation();
+		Double from_lat = location.getLatitude();
+		Double from_lon = location.getLongitude();
+		String url = "http://maps.google.com/maps?saddr=" + from_lat + ","
+				+ from_lon + "&daddr=" + to_lat + "," + to_lng
+				+ "&lci=bike&dirflg=b";
+		Intent app = new Intent(android.content.Intent.ACTION_VIEW,
+				Uri.parse(url));
+		startActivity(app);
+	}
+	
+	private Location getCurrentLocation() {
+		LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+		Criteria criteria = new Criteria();
+		String provider = service.getBestProvider(criteria, false);
+		Location location = service.getLastKnownLocation(provider);
+		return location;
+	}
 	
 	private class ExpandedListAdapter extends SimpleExpandableListAdapter {
 
@@ -65,8 +124,7 @@ public class CommentActivity extends ExpandableListActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		Parse.initialize(this, "wllYXLfWfUbFoBpPBBGK2aLa9V5H0LaCkoKR3qfm",
-				"mraFSkEryhjIgD3Td2pMY062zxyhKKjEeeu8DsOX");
+		Parse.initialize(this, applicationId,clientKey);
 		
 		setContentView(R.layout.activity_comment);
 		
