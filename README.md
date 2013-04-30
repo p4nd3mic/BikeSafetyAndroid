@@ -4,8 +4,3 @@ An android app that encourages members of the Upenn community to bike safely. Th
 
 
 
-Parse Login Credentials 
-	email account: cis350bikesafety@gmail.com 
-	password: xwobwabwa
-
-

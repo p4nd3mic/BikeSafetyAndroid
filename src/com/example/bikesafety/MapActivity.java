@@ -91,11 +91,8 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-
 		Parse.initialize(this, applicationId, clientKey);
 		mGeoCoder = new Geocoder(this);
-
-
 		setUpMapIfNeeded();
 		handleIntent(getIntent());
 
@@ -146,7 +143,7 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 
 				ParseQuery pquery = new ParseQuery("BikeRack");
 				pquery.whereNear("location", searchedLocation);
-				pquery.setLimit(1);
+				pquery.setLimit(3);
 				pquery.findInBackground(new FindCallback() {
 					public void done(List<ParseObject> rackList,
 							ParseException e) {
@@ -156,7 +153,7 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 
 					}
 				});
-				// zoomAndCenterOnLocation(lat, lng);
+				zoomAndCenterOnLocation(lat, lng);
 
 			}
 
