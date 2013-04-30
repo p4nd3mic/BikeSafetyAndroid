@@ -9,6 +9,7 @@
     <string name="menu_photo_creds">Icon Credits</string>
     <string name="covered">Covered Bike Rack</string>
     <string name="uncovered">Uncovered Bike Rack</string>
+    <string name="menu_search">Get directions to this bike rack</string>
     <string name="menu_search">Search for a bike rack</string>
     <string name="search_hint">Search for a bike rack</string>
     <string name="settings_description">Definitions of words</string>

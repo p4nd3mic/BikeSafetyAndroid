@@ -32,6 +32,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.SearchRecentSuggestions;
 import android.view.Menu;
@@ -120,12 +121,9 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		}
 	}
 
-
-
 	/**
-	 * Find 15 search results from the string location
-	 * zoom and centers on location, if it is in Phildelphia
-	 * does nothing, otherwise
+	 * Find 15 search results from the string location zoom and centers on
+	 * location, if it is in Phildelphia does nothing, otherwise
 	 */
 	@SuppressLint("NewApi")
 	private void getSearchResults(String query) {
@@ -158,22 +156,22 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		}
 
 	}
-	
-	
-	
-/* set up search configurations for the activity */
+
+	/* set up search configurations for the activity */
 	@SuppressLint("NewApi")
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_main, menu);
 
-		SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-		SearchView searchView = (SearchView) menu.findItem(R.id.menu_search)
-				.getActionView();
-		searchView.setSearchableInfo(searchManager
-				.getSearchableInfo(getComponentName()));
-		searchView.setIconifiedByDefault(false);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+			SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+			SearchView searchView = (SearchView) menu
+					.findItem(R.id.menu_search).getActionView();
+			searchView.setSearchableInfo(searchManager
+					.getSearchableInfo(getComponentName()));
+			searchView.setIconifiedByDefault(false);
+		}
 		return true;
 	}
 
@@ -198,7 +196,7 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		}
 	}
 
-	//first checks cache, then queries parse for all the bike racks
+	// first checks cache, then queries parse for all the bike racks
 	private void fetchBikeRacks() {
 
 		ParseQuery query = new ParseQuery("BikeRack");
