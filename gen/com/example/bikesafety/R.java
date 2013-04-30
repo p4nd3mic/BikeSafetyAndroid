@@ -127,6 +127,11 @@ containing a value of this type.
          */
         public static final int zOrderOnTop=0x7f01000d;
     }
+    public static final class color {
+        public static final int red=0x7f070002;
+        public static final int tan=0x7f070000;
+        public static final int white=0x7f070001;
+    }
     public static final class drawable {
         public static final int bikewell=0x7f020000;
         public static final int caution=0x7f020001;
@@ -169,8 +174,8 @@ containing a value of this type.
         public static final int splash_screen=0x7f030006;
     }
     public static final class menu {
-        public static final int activity_comment=0x7f080000;
-        public static final int activity_main=0x7f080001;
+        public static final int activity_comment=0x7f090000;
+        public static final int activity_main=0x7f090001;
     }
     public static final class string {
         public static final int app_name=0x7f06000b;
@@ -256,11 +261,11 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f070000;
+        public static final int AppBaseTheme=0x7f080000;
         /**  Application theme. 
  All customizations that are NOT specific to a particular API-level can go here. 
          */
-        public static final int AppTheme=0x7f070001;
+        public static final int AppTheme=0x7f080001;
     }
     public static final class xml {
         public static final int searchable=0x7f040000;

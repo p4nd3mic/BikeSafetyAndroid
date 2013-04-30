@@ -65,8 +65,7 @@ import com.parse.ParseQuery;
  */
 public class MapActivity extends android.support.v4.app.FragmentActivity {
 
-	private GoogleMap mMap;
-	private HashMap<Marker, String> mMarkerIDs;
+
 	private static final LatLng thirtyEighthAndMarket = new LatLng(39.956685,
 			-75.198031);
 	private static final LatLng thirtyEighthAndSpruce = new LatLng(39.951409,
@@ -83,6 +82,8 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 	private final String applicationId = "wllYXLfWfUbFoBpPBBGK2aLa9V5H0LaCkoKR3qfm";
 	private final String clientKey = "mraFSkEryhjIgD3Td2pMY062zxyhKKjEeeu8DsOX";
 	private Geocoder mGeoCoder;
+	private GoogleMap mMap;
+	private HashMap<Marker, String> mMarkerIDs;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -215,7 +216,7 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 						double lat = point.getLatitude();
 						double lng = point.getLongitude();
 						LatLng position = new LatLng(lat, lng);
-						String title = rack.getString("address");
+						String title = rack.getString("buildingName");
 						Marker marker = addMarker(icon, position, title);
 						mMarkerIDs.put(marker, rack.getObjectId());
 					}
@@ -265,11 +266,10 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		fetchBikeRacks();
 		addTrolleyTracks();
 		setUpConstructionSites();
-		mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+		mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
 			@Override
-			public boolean onMarkerClick(Marker mark) {
+			public void onInfoWindowClick(Marker mark) {
 				showComments(mMarkerIDs.get(mark));
-				return true;
 			}
 		});
 	}
