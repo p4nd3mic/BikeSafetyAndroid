@@ -85,6 +85,7 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 	private GoogleMap mMap;
 	private HashMap<Marker, String> mMarkerIDs;
 	private HashMap<String, Marker> mRacksToMarkers;
+	private SearchManager searchManager ;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +94,7 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 
 		Parse.initialize(this, applicationId, clientKey);
 		mGeoCoder = new Geocoder(this);
+
 
 		setUpMapIfNeeded();
 		handleIntent(getIntent());
@@ -113,7 +115,6 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 			// word
 			intent.getData();
 		} else if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-			System.out.println("action search");
 			String query = intent.getStringExtra(SearchManager.QUERY);
 			SearchRecentSuggestions suggestions = new SearchRecentSuggestions(
 					this, SuggestionProvider.AUTHORITY, SuggestionProvider.MODE);
@@ -172,8 +173,8 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		MenuInflater inflater = getMenuInflater();
 		inflater.inflate(R.menu.activity_main, menu);
 
+		searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-			SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 			SearchView searchView = (SearchView) menu
 					.findItem(R.id.menu_search).getActionView();
 			searchView.setSearchableInfo(searchManager
@@ -183,7 +184,6 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		return true;
 	}
 
-	@SuppressLint("NewApi")
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -198,11 +198,8 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 			return true;
 		case R.id.menu_search:
 			onSearchRequested();
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
-				SearchView searchView = (SearchView) item.getActionView();
-				InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-				mgr.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
-			}
+			searchManager.stopSearch();
+			
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -285,6 +282,7 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		mMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
 			@Override
 			public void onInfoWindowClick(Marker mark) {
+				mark.hideInfoWindow();
 				showComments(mMarkerIDs.get(mark));
 			}
 		});
