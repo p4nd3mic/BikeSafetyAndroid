@@ -133,10 +133,9 @@ public class CommentActivity extends ExpandableListActivity {
 		// Get the marker ID
 		String marker_id = getIntent().getStringExtra("com.example.bikesafety.ID");
 		
-		// Add header and footer to ListView
+		// Add header to ListView
 		ExpandableListView lv = getExpandableListView();
 		lv.addHeaderView(View.inflate(this, R.layout.comment_header, null));
-		lv.addFooterView(View.inflate(this, R.layout.comment_footer, null));
 		
 		// Get the bikeRack
 		ParseQuery query = new ParseQuery("BikeRack");

@@ -15,4 +15,16 @@
       android:layout_gravity="center"
       android:gravity="center"
       android:textSize="20sp"/>
+  <EditText android:id="@+id/comment_edit"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:hint="@string/comment_hint"/>
+  <Button android:id="@+id/comment_submit"
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_gravity="center"
+      android:text="@string/comment_submit"
+      android:gravity="center"
+      android:onClick="submitComment"/>
 </LinearLayout>

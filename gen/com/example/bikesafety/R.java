@@ -137,38 +137,36 @@ containing a value of this type.
     public static final class id {
         public static final int child_body=0x7f050009;
         public static final int child_date=0x7f05000a;
-        public static final int comment_address=0x7f05000f;
-        public static final int comment_building=0x7f050010;
-        public static final int comment_edit=0x7f05000c;
-        public static final int comment_footer=0x7f05000b;
-        public static final int comment_header=0x7f05000e;
-        public static final int comment_submit=0x7f05000d;
+        public static final int comment_address=0x7f05000c;
+        public static final int comment_building=0x7f05000d;
+        public static final int comment_edit=0x7f05000e;
+        public static final int comment_header=0x7f05000b;
+        public static final int comment_submit=0x7f05000f;
         public static final int list=0x7f050007;
         public static final int map=0x7f050008;
         public static final int map_container=0x7f050005;
-        public static final int menu_directions=0x7f050015;
-        public static final int menu_photo_creds=0x7f050016;
-        public static final int menu_search=0x7f050017;
-        public static final int menu_settings=0x7f050014;
+        public static final int menu_directions=0x7f050014;
+        public static final int menu_photo_creds=0x7f050015;
+        public static final int menu_search=0x7f050016;
+        public static final int menu_settings=0x7f050013;
         public static final int none=0x7f050000;
         public static final int normal=0x7f050001;
-        public static final int parent_body=0x7f050011;
-        public static final int parent_date=0x7f050012;
+        public static final int parent_body=0x7f050010;
+        public static final int parent_date=0x7f050011;
         public static final int progress_bar=0x7f050004;
         public static final int satellite=0x7f050002;
         public static final int terrain=0x7f050003;
         public static final int text=0x7f050006;
-        public static final int textView1=0x7f050013;
+        public static final int textView1=0x7f050012;
     }
     public static final class layout {
         public static final int activity_comment=0x7f030000;
         public static final int activity_main=0x7f030001;
         public static final int child_row=0x7f030002;
-        public static final int comment_footer=0x7f030003;
-        public static final int comment_header=0x7f030004;
-        public static final int parent_row=0x7f030005;
-        public static final int safety_tips=0x7f030006;
-        public static final int splash_screen=0x7f030007;
+        public static final int comment_header=0x7f030003;
+        public static final int parent_row=0x7f030004;
+        public static final int safety_tips=0x7f030005;
+        public static final int splash_screen=0x7f030006;
     }
     public static final class menu {
         public static final int activity_comment=0x7f080000;
@@ -176,11 +174,11 @@ containing a value of this type.
     }
     public static final class string {
         public static final int app_name=0x7f06000b;
-        public static final int comment_cancel=0x7f06001a;
-        public static final int comment_hint=0x7f060016;
-        public static final int comment_invalid=0x7f060018;
-        public static final int comment_reply_title=0x7f060019;
-        public static final int comment_submit=0x7f060017;
+        public static final int comment_cancel=0x7f06001b;
+        public static final int comment_hint=0x7f060017;
+        public static final int comment_invalid=0x7f060019;
+        public static final int comment_reply_title=0x7f06001a;
+        public static final int comment_submit=0x7f060018;
         /**  Button in confirmation dialog to enable Google Play services.  Clicking it
         will direct user to application settings of Google Play services where they
         can enable it [CHAR LIMIT=30] 
@@ -227,12 +225,13 @@ containing a value of this type.
         public static final int covered=0x7f060011;
         public static final int hello_world=0x7f06000d;
         public static final int map=0x7f06000f;
+        public static final int menu_directions=0x7f060013;
         public static final int menu_photo_creds=0x7f060010;
-        public static final int menu_search=0x7f060013;
+        public static final int menu_search=0x7f060014;
         public static final int menu_tips=0x7f06000e;
-        public static final int search_hint=0x7f060014;
+        public static final int search_hint=0x7f060015;
         public static final int search_label=0x7f06000c;
-        public static final int settings_description=0x7f060015;
+        public static final int settings_description=0x7f060016;
         public static final int uncovered=0x7f060012;
     }
     public static final class style {
