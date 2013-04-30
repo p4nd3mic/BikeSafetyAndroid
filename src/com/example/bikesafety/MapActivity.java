@@ -38,6 +38,7 @@ import android.provider.SearchRecentSuggestions;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.SearchView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -65,7 +66,6 @@ import com.parse.ParseQuery;
  */
 public class MapActivity extends android.support.v4.app.FragmentActivity {
 
-
 	private static final LatLng thirtyEighthAndMarket = new LatLng(39.956685,
 			-75.198031);
 	private static final LatLng thirtyEighthAndSpruce = new LatLng(39.951409,
@@ -84,6 +84,7 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 	private Geocoder mGeoCoder;
 	private GoogleMap mMap;
 	private HashMap<Marker, String> mMarkerIDs;
+	private HashMap<String, Marker> mRacksToMarkers;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -130,26 +131,32 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 	private void getSearchResults(String query) {
 		try {
 
-			double lowerLeftLatitude = 39.9;
-			double lowerLeftLongitude = -75.26;
-			double upperRightLongitud = 40;
-			double upperRightLatitude = -75.1;
 			ArrayList<Address> locationResults = (ArrayList<Address>) mGeoCoder
-					.getFromLocationName(query, 15, lowerLeftLatitude,
-							lowerLeftLongitude, upperRightLatitude,
-							upperRightLongitud);
+					.getFromLocationName(query + " Philadelphia, PA 19104", 5);
 
 			if (locationResults.isEmpty())
 				System.out.println("empty");
 
 			else {
-				for (Address addr : locationResults)
-					if (addr.getAddressLine(1).equals("Philadelphia, PA")) {
-						System.out.println(addr.getAddressLine(1));
-						zoomAndCenterOnLocation(addr.getLatitude(),
-								addr.getLongitude());
-						break;
+				Address addr = locationResults.get(0);
+				double lat = addr.getLatitude();
+				double lng = addr.getLongitude();
+				ParseGeoPoint searchedLocation = new ParseGeoPoint(lat, lng);
+
+				ParseQuery pquery = new ParseQuery("BikeRack");
+				pquery.whereNear("location", searchedLocation);
+				pquery.setLimit(1);
+				pquery.findInBackground(new FindCallback() {
+					public void done(List<ParseObject> rackList,
+							ParseException e) {
+						ParseObject rack = rackList.get(0);
+						Marker m = mRacksToMarkers.get(rack.getObjectId());
+						m.showInfoWindow();
+
 					}
+				});
+				// zoomAndCenterOnLocation(lat, lng);
+
 			}
 
 		} catch (IOException e) {
@@ -176,6 +183,7 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		return true;
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
@@ -190,7 +198,11 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 			return true;
 		case R.id.menu_search:
 			onSearchRequested();
-
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+				SearchView searchView = (SearchView) item.getActionView();
+				InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+				mgr.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+			}
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -203,6 +215,7 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 		ParseQuery query = new ParseQuery("BikeRack");
 		query.setCachePolicy(ParseQuery.CachePolicy.CACHE_THEN_NETWORK);
 		query.findInBackground(new FindCallback() {
+
 			@Override
 			public void done(List<ParseObject> rackList, ParseException e) {
 				if (e == null) {
@@ -219,6 +232,8 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 						String title = rack.getString("buildingName");
 						Marker marker = addMarker(icon, position, title);
 						mMarkerIDs.put(marker, rack.getObjectId());
+						mRacksToMarkers.put(rack.getObjectId(), marker);
+
 					}
 				}
 			}
@@ -258,6 +273,7 @@ public class MapActivity extends android.support.v4.app.FragmentActivity {
 	 */
 	private void setUpMap() {
 		mMarkerIDs = new HashMap<Marker, String>();
+		mRacksToMarkers = new HashMap<String, Marker>();
 
 		Location location = getCurrentLocation();
 		if (location != null)
